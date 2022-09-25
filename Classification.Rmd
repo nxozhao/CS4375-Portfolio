@@ -1,0 +1,200 @@
+---
+title: "Classification - Neo Zhao - CS4375"
+output:
+  pdf_document: default
+---
+
+## Linear Models
+* Logistic Regression uses a qualitative target variable to predict. In this project, I have found the ratings of Red and White wine. I will be setting all ratings > 3 to 1 and all ratings < 3 to 0. While there were about 32 observations that were exactly 3, we will omit them as it will not mess with the data too much out of 12,000+ observations. The Linear Model for classification will create a sort of barrier to seperate into different classes. In this project, Ratings > 3 and Ratings < 3 will be predicted into 2 different classes. 
+
+```{r}
+library(tidyverse)
+library(dplyr)
+library(ROCR)
+library(mccr)
+
+# Source: https://www.kaggle.com/datasets/budnyak/wine-rating-and-price?select=Red.csv 
+
+# Red and White wine from the same dataset; however, separated by type
+# Red Total: 8666, White Total: 3764
+Red <- read.csv("Red.csv")
+White <- read.csv("White.csv")
+
+# Combine the datasets together, Total: 12430
+totalWine <- rbind(data = Red, data = White)
+totWine <- rbind(data = Red, data = White)
+
+# Rename ï..Name to just Name
+names(totalWine)[1] <- "Name"
+
+# Omit Names, Winery, & Region Column
+totalWine <- subset(totalWine, select = -c(Name, Winery, Region) )
+
+# Omit all records where Rating = 3, Total: 12398
+totalWine <- subset(totalWine, totalWine$Rating != 3)
+
+
+
+# Replace ratings with 1 if Rating > 3 and replace with 0 if Rating < 3
+totalWine$Rating[totalWine$Rating <= 3] <- 0
+totalWine$Rating[totalWine$Rating > 3] <- 1
+```
+
+### A. Divide into 80/20 train/test
+```{r}
+set.seed(1)
+
+i <- sample(1:nrow(totalWine), nrow(totalWine) * 0.8, replace = FALSE)
+train <- totalWine[i,]
+test <- totalWine[-i,]
+```
+
+### B. Data Exploration
+```{r}
+# 1) summary()
+summary(train)
+```
+
+```{r}
+# 2) is.na()
+colSums(is.na(train))
+```
+
+```{r}
+# 3) str()
+str(train)
+```
+
+```{r}
+# 4) head() functions
+head(train)
+```
+
+```{r}
+# 5) cor() and pairs()
+cor(train[,c(2:4)])
+
+pairs(train[,c(2:4)])
+```
+
+
+### C. Informative Graphs
+```{r}
+par(mfrow = c(1,2))
+
+# Comparing types with Price
+ggplot(data = train, aes(x = Rating, y = Price)) +
+  geom_bar(stat = "identity")
+```
+
+```{r}
+# Red
+plot(Rating ~ Price, data = Red, main = "Red Wine", xlab = "Price", ylab = "Rating")
+
+# White
+plot(Rating ~ Price, data = White, main = "White Wine", xlab = "Price", ylab = "Rating")
+
+# Total
+plot(Rating ~ Price, data = totWine, main = "Red + White Wine", xlab = "Price", ylab = "Rating")
+
+# After setting ratings to 1 and 0
+plot(Rating ~ Price, data = train, main = "Red + White Wine - Train", xlab = "Price", ylab = "Rating")
+```
+
+### D. Logistic Regression Model + Summary
+```{r}
+glm1 <- glm(Rating ~ Price, data = train, family = binomial)
+summary(glm1)
+```
+
+```{r}
+probs <- predict(glm1, nevdata = test, type = "response") 
+pred <- ifelse(probs > 0.5, 1, 0) 
+acc1 <- mean(pred == as.integer (test$Rating)) 
+print(paste ("glm1 accuracy = ", acc1))
+```
+
+### E. Naïve Bayes Model + Output + Evaluation
+```{r}
+library(e1071)
+
+nb1 <- naiveBayes(Rating ~ ., data = train)
+
+# Output
+nb1
+
+# Evaluate
+# Predict
+p1 <- predict(nb1, newdata = test, type = "class")
+table(p1, test$Rating)
+
+# Mean
+mean(p1 == test$Rating)
+```
+
+### F. Classification Models + Compare 
+-> Logistic Regression Accuracy = 0.9979839
+-> Naive Bayes Accuracy = 0.9879032
+
+-> Area under Logistic Regression ROC = 0.9210101
+-> Area under Naive Bayes ROC = 0.4949495
+
+-> We can conclude LR is doing good while NB is performing a little randomly
+```{r}
+# Logistic
+pred1 <- predict(glm1, newdata = test, type = "response")
+probs1 <- ifelse(pred1 > 0.5, 1, 0)
+acc1 <- mean(probs1 == test$Rating)
+  
+acc1
+
+head(table(pred1, test$Rating))
+```
+
+```{r}
+# Naive Bayes
+pred2 <- predict(nb1, newdata = test, type = "class")
+acc2 <- mean(pred2 == test$Rating)
+
+acc2
+
+head(table(pred2, test$Rating))
+```
+
+```{r}
+p1 <- predict(glm1, newdata = test, type = "response")
+pr1 <- prediction(p1, test$Rating)
+prf1 <- performance(pr1, measure = "tpr", x.measure = "fpr")
+
+plot(prf1)
+```
+
+```{r}
+auc1 <- performance(pr1, measure = "auc")
+auc1 <- auc1 @ y.values[[1]]
+```
+
+```{r}
+p2 <- predict(nb1, newdata = test, type = "class")
+pr2 <- prediction(as.numeric(p2), as.numeric(test$Rating))
+prf2 <- performance(pr2, measure = "tpr", x.measure = "fpr")
+
+plot(prf2)
+
+auc2 <- performance(pr2, measure = "auc")
+auc2 <- auc2 @ y.values[[1]]
+```
+
+### G. Strengths and Weaknesses of Naïve Bayes and Logistic Regression
+* The strengths of Naive Bayes includes the easy implementation as well as working well with rather small sets of data; the interpretation of the data output is also on the easier side. 
+* While Naive Bayes is good with smaller data, it starts to struggle with larger sets of data. The method is naive due to assuming that each input variable is independent.
+
+* The strengths of Logistic Regression include easy to implement, interpret, and efficient to train. It also does not make assumptions about distributions of classes in feature space. 
+* However, the number of observations is lesser than the number of features, which can lead to overfitting. 
+
+### H. Benefits, Drawbacks, Experience
+* Accuracy: The function tells us the rate of correct predictions over the number of observations. It's one of the more simple and common matrics to use. It might not be the best in calculating accuracy in very imbalanced sets of data.
+
+* ROC and AUC: ROC compares the prediction between True Value Rates and False Value Rates. Although I think most ROC graphs should be more cuvred like a Square Root Function; however, my graph turned out kind of jagged like a staricase. AUC tells us the area under the ROC curve and gives an indication on how good the model is on a scale of 0.5 to 1, where 1 is the best. In my case, AUC1 is 0.9210101 and AUC2 is 0.4949495, which means AUC1 is doing better than AUC2. 
+
+* MCC: This is another method of accuracy; however it considers all other differences in class distribution.

@@ -1,0 +1,174 @@
+---
+title: "Regression Pt. 1 - Neo Zhao - CS4375"
+output:
+  pdf_document: default
+---
+## Linear Regression
+* In Linear regression, we explore our data to find if there's a relationship between x and y. The regression estimates explain the relationship between one dependent variable and one or more independent variables. Some advantages include simple implementation as well as as the regularization of overfitted data. Some disadvantages include heavy sensitivity to outliers and likely to underfit some data.  \
+
+```{r}
+library(rlang)
+library(dplyr)
+library(ggplot2)
+
+# Source: https://www.kaggle.com/datasets/neuromusic/avocado-prices
+
+Avo <- read.csv("avocado.csv")
+
+# Grab month from date
+AvoDates <- as.Date(Avo$Date, format = "%Y-%m-%d") 
+avoMonth <- format(AvoDates, "%m") 
+
+# Replace old date column with new numerical month column
+Avo$Date <- avoMonth
+```
+
+\newpage
+
+## A. Divide into 80/20 train/test
+```{r}
+# Set a seed for reproducibility
+set.seed(1)
+i <- sample(1:nrow(Avo), nrow(Avo) * 0.8, replace = FALSE)
+train <- Avo[i,]
+test <- Avo[-i,]
+```
+
+## B. Data Exploration
+```{r}
+# 1) Summary
+summary(train)
+```
+
+```{r}
+# 2) Find # of missing values
+colSums(is.na(train))
+```
+
+```{r}
+# 3) str() Function
+str(train)
+```
+
+```{r}
+# 4) names() Function
+names(train)
+```
+
+```{r}
+# 5) cor() and pairs()
+cor(train[,c(3:11,13)])
+
+pairs(train[,c(3:11,13)])
+```
+
+\newpage
+
+## C. Informative graphs
+```{r}
+# Boxplot with ggplot
+ggplot(train, aes(x = AveragePrice,
+       fill = Date)) + geom_boxplot()
+
+# Comparing types with Average Price
+ggplot(data = train, aes(x = type, y = AveragePrice)) +
+  geom_bar(stat = "identity")
+```
+
+
+## D. 1) Simple Linear Regression Model + Summary
+```{r}
+# First Linear Model - y = Total Volume, x = Average Price
+lm1 <- lm(Total.Volume ~ AveragePrice, data = train)
+
+# Summary
+summary(lm1)
+```
+
+## E. Plot Residuals + Summary
+* In the Residuals vs. Fitted plot, we can see there's a line which most of the model follows; however, there is a clump of outliers and cases that do not follow the line.
+* In the Normal Q-Q plot... it definitely looks a little concerning where a lot of the cases do not follow the line. They are most likely the same clump that didn't follow in the Residuals vs. Fitted plot.
+* In the Scale-Location plot, the residuals appear fairly random; however, somewhere between 0e+00 and 1e+06, the line becomes just slightly steeper. 
+* In the Residuals vs. Leverage plot, we have a rather straight red line and Cook's distance lines are not very present. We again, have the clump of outliers showing here again. 
+
+```{r}
+par(mfrow = c(2,2))
+plot(lm1)
+```
+
+## F. 2) Multiple Linear Regression Model + Residual Plots + Summary
+```{r}
+# Second (Multiple) Linear Model - y = Total Volume, x = Average Price & Date
+lm2 <- lm(Total.Volume ~ AveragePrice + Date, data = train)
+
+# Residual Plots
+par(mfrow = c(2,2))
+plot(lm2)
+
+# Summary
+summary(lm2)
+```
+
+## G. 3) Third Linear Regression Model With Different Combination of Predictors + Residual Plots + Summary
+```{r}
+# Third Linear Model - y = Average Price, x = Total Volume & Date
+lm3 <- lm(AveragePrice ~ Total.Volume + Date, data = train)
+
+# Residual Plots
+par(mfrow = c(2,2))
+plot(lm3)
+
+# Summary
+summary(lm3)
+```
+
+## H. Compare Results + Summary
+* I believe Model 3 shows the best comparison; however, overall I don't think the data set is very good with further cleaning and inspection of the "clumps" of outliers that are present across the models. Over all the models, they're a little concerning; however, our third model has the best looking Normal Q-Q plot. 
+
+## I. Predict and Evalute the Test Data using Metrics Correlation & MSE + Compare
+* For MSE, you can see that lm1 and lm2 have quite large MSEs while lm3 is very close to 0. In this case, I believe lm3, which compares Average Price to Total Volume is the best model. 
+* Our target values are not the same as we use different predictors each time
+* All of the values in Model 1 and 2 are quite large. Model 3 is the best.
+```{r}
+# Predict
+
+# First Model
+pred1 <- predict(lm1, newdata = test)
+cor1 <- cor(pred1, test$Total.Volume)
+mse1 <- mean((pred1 - test$Total.Volume)^2) 
+rmse1 <- sqrt(mse1)
+
+head(pred1)
+cor1
+mse1
+rmse1
+```
+
+```{r}
+# Second Model
+pred2 <- predict(lm2, newdata = test)
+cor2 <- cor(pred2, test$Total.Volume)
+mse2 <- mean((pred2 - test$Total.Volume)^2) 
+rmse2 <- sqrt(mse2)
+
+head(pred2)
+cor2
+mse2
+rmse2
+```
+
+```{r}
+# Third Model
+pred3 <- predict(lm3, newdata = test)
+cor3 <- cor(pred3, test$AveragePrice)
+mse3 <- mean((pred3 - test$AveragePrice)^2) 
+rmse3 <- sqrt(mse3)
+
+head(pred3)
+cor3
+mse3
+rmse3
+```
+
+
+
