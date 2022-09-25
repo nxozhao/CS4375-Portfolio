@@ -7,3 +7,6 @@ The document for this assignment may be viewed [here](overviewOfML.pdf).
 
 ### 2) Component 1 - Data Exploration
 The document for this assignment may be viewed [here](portCompOne.pdf).
+
+### 3) Component 2 - Linear Models
+T
