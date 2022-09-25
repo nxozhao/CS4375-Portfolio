@@ -9,4 +9,6 @@ The document for this assignment may be viewed [here](overviewOfML.pdf).
 The document for this assignment may be viewed [here](portCompOne.pdf).
 
 ### 3) Component 2 - Linear Models
-T
+There are 2 documents for this assignment. 
+1) [Regression](Regression.pdf)
+2) [Classification](Classification.pdf)
