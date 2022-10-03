@@ -15,6 +15,5 @@ There are 2 documents for this assignment.
 
 ### 3) Component 3 - ML from Scratch
 There are 3 documents for this assignment.
-1) Regression
-2) Classification
-3) Weights Calculation
+1) [Regression](fourRegression.cpp)
+2) [Naive Bayes](fourNaiveBayes.cpp)
