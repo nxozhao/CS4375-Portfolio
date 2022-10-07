@@ -20,7 +20,7 @@ There are 3 documents for this assignment.
 
 ### 4) Component 4 - Similarity
 There are 4 documents for this assignment; I worked with: 
-1) Regression
+1) Regression - Atmin Sheth
 2) [Classification](classificationFive.pdf) - Neo Zhao
-3) Clustering
-4) Dimensionality Reduction
+3) Clustering - Andrew Sen
+4) Dimensionality Reduction - Jack Asaad
