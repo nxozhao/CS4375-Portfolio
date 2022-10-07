@@ -1,7 +1,9 @@
 <p align="center">
   ✨ Hi, I'm Neo Zhao! I am currently a Junior at University of Texas at Dallas. Here is my Portfolio for CS 4375 - Introduction to Machine Learning! 
   </p>
-( – – – – ) 
+
+------------------
+
 ### 0) Overview of Machine Learning
 The document for this assignment may be viewed [here](overviewOfML.pdf).
 
