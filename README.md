@@ -17,3 +17,10 @@ There are 2 documents for this assignment.
 There are 3 documents for this assignment.
 1) [Regression](fourRegression.cpp)
 2) [Naive Bayes](fourNaiveBayes.cpp)
+
+### 4) Component 4 - Similarity
+There are 4 documents for this assignment; I worked with: 
+1) Regression
+2) [Classification](classificationFive.pdf)
+3) Clustering
+4) Dimensionality Reduction
