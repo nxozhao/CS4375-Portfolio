@@ -21,6 +21,6 @@ There are 3 documents for this assignment.
 ### 4) Component 4 - Similarity
 There are 4 documents for this assignment; I worked with: 
 1) Regression
-2) [Classification](classificationFive.pdf)
+2) [Classification](classificationFive.pdf) - Neo Zhao
 3) Clustering
 4) Dimensionality Reduction
