@@ -1,5 +1,5 @@
 <p align="center">
-  ✨ Hi, I'm Neo Zhao! I am currently a Data Science Junior at University of Texas at Dallas. Here is my Portfolio for CS 4375 - Introduction to Machine Learning! 
+  ## ✨ Hi, I'm Neo Zhao! I am currently a Data Science Junior at University of Texas at Dallas. Here is my Portfolio for CS 4375 - Introduction to Machine Learning! 
   </p>
 
 ------------------
