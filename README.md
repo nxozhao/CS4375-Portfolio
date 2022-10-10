@@ -25,5 +25,5 @@ There are 3 documents for this assignment.
 There are 4 documents for this assignment; I worked with: 
 1) Regression - Atmin Sheth
 2) [Classification](classificationFive.pdf) - Neo Zhao
-3) Clustering - Andrew Sen
-4) Dimensionality Reduction - Jack Asaad
+3) [Clustering](ClusteringAndrew) - Andrew Sen
+4) [Dimensionality Reduction](DimensionalityJack) - Jack Asaad
