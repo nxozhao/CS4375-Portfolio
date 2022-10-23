@@ -27,3 +27,10 @@ There are 4 documents for this assignment; I worked with:
 2) [Classification](classificationFive.pdf) - Neo Zhao
 3) [Clustering](ClusteringAndrew) - [Andrew Sen](https://github.com/platformer)
 4) [Dimensionality Reduction](DimensionalityJack) - Jack Asaad
+
+### 4) Component 5 - Kernel and Ensemble
+There are 3 documents.
+1) [SVM Regression](RegressionA.pdf) - [Andrew Sen](https://github.com/platformer)
+2) [SVM Classification](classSix.pdf) - Neo Zhao
+3) [Ensemble Techniques](RF_XG_ADA.pdf)
+
