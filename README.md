@@ -34,3 +34,6 @@ There are 3 documents.
 2) [SVM Classification](classSix.pdf) - Neo Zhao
 3) [Ensemble Techniques](RF_XG_ADA.pdf)
 
+### 5) Component 6 - ML With SKLearn
+There is only 1 document.
+1) [ML With SKLearn](MLwithSKLearn.pdf) 
