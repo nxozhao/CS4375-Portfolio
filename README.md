@@ -37,3 +37,7 @@ There are 3 documents.
 ### 5) Component 6 - ML With SKLearn
 There is only 1 document.
 1) [ML With SKLearn](MLwithSKLearn.pdf) 
+
+### 6) Component 7 - Image Classification
+There is only 1 document.
+1) [Image Classification](imageClass.pdf) - Neo Zhao and [Andrew Sen](https://github.com/platformer)
