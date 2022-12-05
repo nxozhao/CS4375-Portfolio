@@ -24,14 +24,14 @@ There are 3 documents for this assignment.
 ### 4) Component 4 - Similarity
 There are 4 documents for this assignment; I worked with: 
 1) Regression - Atmin Sheth
-2) [Classification](classificationFive.pdf) - Neo Zhao
+2) [Classification](classificationFive.pdf) - [Neo Zhao](https://github.com/nxozhao)
 3) [Clustering](ClusteringAndrew.pdf) - [Andrew Sen](https://github.com/platformer)
 4) [Dimensionality Reduction](DimensionalityJack.pdf) - Jack Asaad
 
 ### 4) Component 5 - Kernel and Ensemble
 There are 3 documents.
 1) [SVM Regression](RegressionA.pdf) - [Andrew Sen](https://github.com/platformer)
-2) [SVM Classification](classSix.pdf) - Neo Zhao
+2) [SVM Classification](classSix.pdf) - [Neo Zhao](https://github.com/nxozhao)
 3) [Ensemble Techniques](RF_XG_ADA.pdf)
 
 ### 5) Component 6 - ML With SKLearn
@@ -40,4 +40,4 @@ There is only 1 document.
 
 ### 6) Component 7 - Image Classification
 There is only 1 document.
-1) [Image Classification](imageClass.pdf) - Neo Zhao and [Andrew Sen](https://github.com/platformer)
+1) [Image Classification](imageClass.pdf) - [Neo Zhao](https://github.com/nxozhao) and [Andrew Sen](https://github.com/platformer)
